@@ -5,7 +5,7 @@ A Neovim plugin for validating JSON Schemas.
 When working with JSON Schemas, I find myself having to go back and forth
 between Neovim an one of the multiple online services that validate JSON
 Schemas. This plugin aims to solve that problem by providing a simple way to
-validate JSON Schemas directly in Neovim.
+validate JSON Schemas directly in Neovim, using [ajv-cli].
 
 ## Installation
 
@@ -39,3 +39,5 @@ npm install -g ajv-cli
 - [ ] Tests and linting with GitHub Actions
 - [ ] Provide alternative ways to deal with the command output
 - [ ] Provide an option to parse the JSON Schema file, e.g. neovim doesn't support jsonc
+
+[ajv-cli]: https://github.com/ajv-validator/ajv-cli
