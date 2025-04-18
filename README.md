@@ -23,6 +23,8 @@ With lazy.nvim:
 
 Run the command `:JsonSchemaValidate` while editing a JSON Schema file.
 
+https://github.com/user-attachments/assets/f12ae5a7-0b59-4985-95e7-5b0f8ef6fa31
+
 ## Dependencies
 
 This plugin assumes you have the `ajv` command line tool installed. You can install it
