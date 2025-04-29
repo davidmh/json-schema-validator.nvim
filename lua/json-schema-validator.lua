@@ -21,7 +21,7 @@ end, 600)
 
 ---@param opts JSONSchemaValidatorOptions
 function M.setup(opts)
-    config = vim.tbl_deep_extend("force", config, opts or {})
+    config.setup(opts)
 
     -- TODO: Can this command be limited to only JSON files?
     vim.api.nvim_create_user_command("JsonSchemaValidate", function()

@@ -1,5 +1,7 @@
 local config = require("json-schema-validator.config")
 
+local namespace = vim.api.nvim_create_namespace("json-schema-validator")
+
 local M = {}
 
 ---@class JSONSchemaValidatorResponseEntry
@@ -72,7 +74,7 @@ function M.set_diagnostics(response_entries, state)
         end
     end
 
-    vim.diagnostic.set(config.namespace, state.bufnr, diagnostics)
+    vim.diagnostic.set(namespace, state.bufnr, diagnostics)
 end
 
 --- Builds a diagnostic object from the node and entry
@@ -135,7 +137,7 @@ function M.run_validation(state)
         stdout = function(_, data)
             if data then
                 vim.schedule(function()
-                    vim.diagnostic.reset(config.namespace, state.bufnr)
+                    vim.diagnostic.reset(namespace, state.bufnr)
                 end)
             end
         end,
@@ -146,7 +148,18 @@ function M.run_validation(state)
                     if ok then
                         M.set_diagnostics(response_entries, state)
                     else
-                        M.set_diagnostics({}, state)
+                        vim.diagnostic.reset(namespace, state.bufnr)
+                        vim.diagnostic.set(namespace, state.bufnr, {
+                            {
+                                lnum = 0,
+                                col = 0,
+                                end_lnum = 0,
+                                end_col = 0,
+                                severity = vim.diagnostic.severity.ERROR,
+                                message = data,
+                                source = "json-schema-validator",
+                            },
+                        })
                     end
                 end)
             end
