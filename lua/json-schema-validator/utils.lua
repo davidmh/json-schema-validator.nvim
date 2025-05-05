@@ -43,6 +43,12 @@ end
 function M.set_diagnostics(response_entries, state)
     local diagnostics = {}
 
+    -- Sort the entries by the instancePath length, so that we can find the
+    -- most specific node first
+    table.sort(response_entries, function(a, b)
+        return #b.instancePath < #a.instancePath
+    end)
+
     local tree = vim.treesitter.get_parser(state.bufnr, "json")
     if not tree then
         vim.notify(
@@ -72,7 +78,13 @@ function M.set_diagnostics(response_entries, state)
                 )
             end
         end
+
+        if #diagnostics >= config.max_errors then
+            goto break_loop
+        end
     end
+
+    ::break_loop::
 
     vim.diagnostic.set(namespace, state.bufnr, diagnostics)
 end
